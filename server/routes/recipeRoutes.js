@@ -26,4 +26,9 @@ router.get('/submit-recipe', recipeController.submitRecipe);
 //In order to post the recipe we need to create a post router too
 router.post('/submit-recipe', recipeController.submitRecipeOnPost);
 
+// About and Contact routes
+router.get('/about', recipeController.about);
+router.get('/contact', recipeController.contact);
+router.post('/contact', recipeController.submitContactForm);
+
 module.exports = router;
