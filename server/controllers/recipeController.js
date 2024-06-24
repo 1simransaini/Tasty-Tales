@@ -220,6 +220,21 @@ exports.submitRecipeOnPost = async(req, res) => {
       res.redirect('/submit-recipe');
     }
   }
+
+//about and contact 
+exports.about = (req, res) => {
+    res.render('about', { title: 'About' });
+  };
+  
+  exports.contact = (req, res) => {
+    res.render('contact', { title: 'Contact' });
+  };
+  
+  exports.submitContactForm = (req, res) => {
+    // Handle the contact form submission logic here
+    // For now, you can just redirect back to the contact page or display a success message
+    res.render('contact', { title: 'Contact', message: 'Thank you for reaching out. We will get back to you soon!' });
+  };
   
 
   //UPDATING THE RECIPE WITH SOME QUERIES
