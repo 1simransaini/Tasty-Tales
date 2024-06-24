@@ -112,6 +112,35 @@
 </section>
 <!-- Mexican End -->
 
+
+<!-- Indian Start -->
+<section class="pb-4 pt-4">
+    <div class="d-flex mb-2 align-items-center">
+        <h2>Indian Recipes</h2>
+        <a href="/categories/Indian" class="ms-auto">View More</a>
+    </div>
+
+
+    <div class="row row-cols-2 row-cols-lg-6 g-2 g-lg-3">
+        
+        <% if(typeof food.indian !== 'undefined' && food.indian.length > 0) { %>
+            <% food.indian.forEach(function(recipe,index){ %>
+            <a href="/recipe/<%= recipe._id %>" class="col text-center category__link">
+                <div class="category__img category__img--large shadow">
+                    <img src="uploads/<%= recipe.image %>" alt="<%= recipe.name %>" loading="lazy">
+                </div>
+
+                <div class="pt-1"><%= recipe.name %></div>
+            </a>
+            <% }) %>
+            <% } else { %>
+                <p>No items found!</p>
+        <% } %>
+
+    </div>
+</section>
+<!-- Indian End -->
+
 <!-- Thai Start -->
 <section class="pb-4 pt-4">
     <div class="d-flex mb-2 align-items-center">
