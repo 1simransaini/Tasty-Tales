@@ -1,26 +1,18 @@
-const express=require('express');
+const mongoose = require('mongoose');
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+const fileUpload = require('express-fileupload');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 
-//express layout is basically helpful when diff layout are created for diff scenarios
-const expressLayouts= require('express-ejs-layouts');
+const app = express();
+const port = process.env.PORT || 3000;
 
-//FOR SUBMIT BUTTON
-const fileUpload= require('express-fileupload');
-const session= require('express-session');
-const cookieParser = require('cookie-parser'); 
-const flash= require('connect-flash');
-
-const app=express();
-const port =process.env.PORT || 3000;
-
-require('dotenv').config()
-
-app.use(express.urlencoded( { extended:true } ));
-//static is used so that hame koi image insert karni ho kabhi to yaha par path path na khelna pade
+// Middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(expressLayouts);
-
-
-//creating middlewares for the submit button to work
 app.use(cookieParser('CookingBlogSecure'));
 app.use(session({
     secret: 'CookingBlogSecretSession',
@@ -30,13 +22,29 @@ app.use(session({
 app.use(flash());
 app.use(fileUpload());
 
-
+// Set view engine and layout
 app.set('layout', './layouts/main');
-app.set('view engine','ejs');
+app.set('view engine', 'ejs');
 
-const routes = require('./server/routes/recipeRoutes.js')
-app.use('/',routes);
+// MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI;
 
-app.listen(port, ()=>{
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch((error) => {
+    console.error('Error connecting to MongoDB:', error.message);
+});
+
+// Routes
+const routes = require('./server/routes/recipeRoutes.js');
+app.use('/', routes);
+
+// Start server
+app.listen(port, () => {
     console.log(`Listening to port ${port}`);
-})
+});
